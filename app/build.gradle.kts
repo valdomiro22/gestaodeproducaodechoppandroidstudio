@@ -1,6 +1,14 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android) // <-- Devolva esta linha (veja a explicação abaixo)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp) // O KSP deve vir antes do Hilt
+
+    // Hilt
+    id("com.google.dagger.hilt.android")
+
+    // Para Firebase
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -40,6 +48,43 @@ android {
 }
 
 dependencies {
+    // Para Firebase
+    implementation(platform("com.google.firebase:firebase-bom:34.7.0"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-storage")
+
+    // Hilt
+    implementation("com.google.dagger:hilt-android:2.57.2")
+    implementation(libs.androidx.compose.material3.lint)
+    implementation(libs.androidx.compose.ui.text)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.compose.foundation.layout)
+    implementation(libs.ads.mobile.sdk)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.foundation)
+    ksp("com.google.dagger:hilt-android-compiler:2.57.2")  // Mude de kapt para ksp aqui!
+    implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
+
+//    implementation("androidx.compose.material:material-icons-core:1.7.4")
+    implementation("androidx.compose.material:material-icons-extended")
+
+    // Para navegação
+    implementation("androidx.navigation:navigation-compose:2.9.6")
+
+    // Para usar na viewModel
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel-compose:1.3.0")
+
+    implementation("androidx.core:core-splashscreen:1.2.0")
+
+    // Para asyncImage
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
+    // Para permissões
+    implementation("com.google.accompanist:accompanist-permissions:0.37.3")
+
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
